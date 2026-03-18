@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eid Salami 😬</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      height: 100vh;
+      overflow-x: hidden;
+      background: linear-gradient(270deg, #ffecd2, #fcb69f, #ff9a9e, #fad0c4);
+      background-size: 800% 800%;
+      animation: gradientMove 12s ease infinite;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      max-width: 350px;
+      margin: 60px auto;
+      animation: floatCard 3s ease-in-out infinite;
+    }
+
+    @keyframes floatCard {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      background: #ff6f61;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+      background: #ff3b2f;
+    }
+
+    img {
+      width: 100%;
+      margin-top: 10px;
+      border-radius: 10px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  
+
+    /* 📱 Mobile Responsive Design */
+    @media (max-width: 480px) {
+      .card {
+        max-width: 90%;
+        margin: 30px auto;
+        padding: 15px;
+      }
+
+      h2 {
+        font-size: 20px;
+      }
+
+      p {
+        font-size: 14px;
+      }
+
+      button {
+        width: 100%;
+        font-size: 15px;
+      }
+
+      input {
+        width: 100%;
+      }
+
+      img {
+        width: 100%;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2>💸 Eid Salami Machine 💸</h2>
+    <p>Pic upload korle paba 20৳ 😬</p>
+
+    <input type="file" id="fileInput" accept="image/*"><br><br>
+    <button onclick="uploadPic()">Submit Pic</button>
+
+    <h3>Total Salami: <span id="money">0</span> ৳</h3>
+
+    <div id="gallery"></div>
+  </div>
+
+<script>
+  let total = 0;
+
+  function uploadPic() {
+    const input = document.getElementById('fileInput');
+    const gallery = document.getElementById('gallery');
+    const money = document.getElementById('money');
+
+    if (input.files.length === 0) {
+      alert("Pic dao age 😑");
+      return;
+    }
+
+    const file = input.files[0];
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+      const img = document.createElement('img');
+      img.src = e.target.result;
+      gallery.appendChild(img);
+
+      total += 20;
+      money.innerText = total;
+
+      let saved = JSON.parse(localStorage.getItem('pics')) || [];
+      saved.push(e.target.result);
+      localStorage.setItem('pics', JSON.stringify(saved));
+    }
+
+    reader.readAsDataURL(file);
+  }
+
+  window.onload = function() {
+    const gallery = document.getElementById('gallery');
+    const money = document.getElementById('money');
+
+    let saved = JSON.parse(localStorage.getItem('pics')) || [];
+
+    saved.forEach(src => {
+      const img = document.createElement('img');
+      img.src = src;
+      gallery.appendChild(img);
+    });
+
+    total = saved.length * 20;
+    money.innerText = total;
+  }
+</script>
+
+</body>
+</html>
